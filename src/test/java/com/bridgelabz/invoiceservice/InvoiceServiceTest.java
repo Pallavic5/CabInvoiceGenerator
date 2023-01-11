@@ -1,9 +1,7 @@
 package com.bridgelabz.invoiceservice;
-/*
- * Step 1: Calculate Fare
- * Given distance and time, the invoice generator should return the total fare for the journey
- * cost - Rs. 10 per Kilometer + Rs. 1 per minute.
- * Minimum Fare - Rs. 5
+/*Problem Statement
+ * Step 2: Multiple Rides
+ * The invoice generator should now take in multiple rides, and calculate the aggregate total for all.
  */
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +19,6 @@ public class InvoiceServiceTest {
 		double fare = invoiceGenerator.calculateFare(distance, time);
 		assertEquals(25, fare, 0.0);
 	}
-	
 	@Test
 	public void givenLessDistanceOrTime_ShouldReturnMinFare() {
 		InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
@@ -30,5 +27,11 @@ public class InvoiceServiceTest {
 		double fare = invoiceGenerator.calculateFare(distance, time);
 		assertEquals(5, fare, 0.0);
 	}
-
+	@Test
+	public void givenMultipleRides_ShouldReturnTotalFare() {
+		InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
+		Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
+		double fare = invoiceGenerator.calculateFare(rides);
+		assertEquals(30, fare, 0.0);
+	}
 }
