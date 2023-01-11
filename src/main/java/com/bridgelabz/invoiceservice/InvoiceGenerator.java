@@ -1,7 +1,7 @@
 package com.bridgelabz.invoiceservice;
-/*Problem Statement
- * Step 2: Multiple Rides
- * The invoice generator should now take in multiple rides, and calculate the aggregate total for all.
+/*
+ * Problem Statement : Step 3 - Enhanced Invoice
+ * The Invoice generator should now return the total number of rides, total fare, average fare per ride.
  */
 public class InvoiceGenerator {
 	/*
@@ -16,15 +16,13 @@ public class InvoiceGenerator {
 		//create method for calculate total fare
 	public double calculateFare(double distance, int time) {
 		double totalFare = distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_TIME;
-		if (totalFare < MINIMUM_FARE)
-			return MINIMUM_FARE;
-		return totalFare;
+		return Math.max(totalFare, MINIMUM_FARE);	
 	}
 		//create method for calculate multiple rides
-	public double calculateFare(Ride[] rides) {
+	public InvoiceSummary calculateFare(Ride[] rides) {
 		for (Ride ride : rides) {
 			totalFare += this.calculateFare(ride.distance, ride.time);
 		}
-		return totalFare;
+		return new InvoiceSummary(rides.length, totalFare);
 	}
 }

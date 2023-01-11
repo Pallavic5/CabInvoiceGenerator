@@ -1,37 +1,43 @@
 package com.bridgelabz.invoiceservice;
-/*Problem Statement
- * Step 2: Multiple Rides
- * The invoice generator should now take in multiple rides, and calculate the aggregate total for all.
+/*
+ * Problem Statement : Step 3 - Enhanced Invoice
+ * The Invoice generator should now return the total number of rides, total fare, average fare per ride.
  */
 import static org.junit.Assert.assertEquals;
-
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class InvoiceServiceTest {
+	InvoiceGenerator invoiceGenerator = null;
 	/*
 	 * Test Cases
 	 */
+	@BeforeClass
+	public void setUp()throws Exception{
+		invoiceGenerator = new InvoiceGenerator();
+	}
 	@Test
 	public void givenDistanceAndTime_ShouldReturnTotalFare() {
-		InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
+		
 		double distance = 2.0;
 		int time = 5;
 		double fare = invoiceGenerator.calculateFare(distance, time);
 		assertEquals(25, fare, 0.0);
 	}
 	@Test
-	public void givenLessDistanceOrTime_ShouldReturnMinFare() {
-		InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
+	public void givenLessDistanceOrTime_ShouldReturnMinFare() { 
 		double distance = 0.1;
 		int time = 1;
 		double fare = invoiceGenerator.calculateFare(distance, time);
 		assertEquals(5, fare, 0.0);
 	}
 	@Test
-	public void givenMultipleRides_ShouldReturnTotalFare() {
-		InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
-		Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
-		double fare = invoiceGenerator.calculateFare(rides);
-		assertEquals(30, fare, 0.0);
+	public void givenMultipleRides_ShouldReturnInvoiceSummary() {
+		Ride[] rides = { 
+				new Ride(2.0, 5),
+				new Ride(0.1, 1) };
+		InvoiceSummary summary = invoiceGenerator.calculateFare(rides);
+		InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
+		assertEquals(expectedInvoiceSummary,summary);
 	}
 }
